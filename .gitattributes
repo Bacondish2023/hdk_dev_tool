@@ -1,0 +1,18 @@
+*	text=auto
+
+# source code
+*.c	text
+*.h	text
+*.cpp	text
+*.hpp	text
+
+*.md	text
+LICENSE	text
+
+*.jpg	binary
+*.png	binary
+
+*.pdf	binary
+
+*.bat	text
+*.sh	text
