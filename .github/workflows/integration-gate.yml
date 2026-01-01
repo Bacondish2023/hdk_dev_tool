@@ -1,0 +1,167 @@
+# @brief A reusable workflow that verifies the target branch
+
+name: IntegrationGate
+
+on:
+  workflow_call:
+    inputs:
+      platforms:
+        description: "Platforms in JSON array format"
+        required: false
+        type: string
+        default: '["ubuntu-latest", "windows-latest", "macos-latest"]'
+      python-versions:
+        description: "Python versions in JSON array format"
+        required: false
+        type: string
+        default: '["3.x"]'
+      build-type-library:
+        description: "Build type for external libraries. One of {Debug, Release, RelWithDebInfo, MinSizeRel}. Keep same with your do_build script"
+        required: false
+        type: string
+        default: 'Debug'
+      is-required-googletest:
+        description: "Setup switch for GoogleTest"
+        required: false
+        type: boolean
+        default: true
+      is-required-boost:
+        description: "Setup switch for Boost"
+        required: false
+        type: boolean
+        default: true
+      is-required-cppcheck:
+        description: "Setup switch for Cppcheck"
+        required: false
+        type: boolean
+        default: true
+    secrets:
+      token:
+        description: "Access token that is used for checkout repositories. If target repository contains submodule this workflow requires permission."
+        required: false
+
+jobs:
+  IntegrationGate:
+    strategy:
+      matrix:
+        platforms: ${{ fromJSON(inputs.platforms) }}
+        python-versions: ${{ fromJSON(inputs.python-versions) }}
+    runs-on: ${{ matrix.platforms }}
+    steps:
+
+      ##################################################
+      # Checkout
+      ##################################################
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: 'recursive'
+          token: ${{ secrets.token || github.token }}
+          persist-credentials: true # This ensures that the scripts can operate submodules
+
+      ##################################################
+      # Setup Environment
+      ##################################################
+      # Python
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-versions }}
+
+      - name: Setup MSVC
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      # GoogleTest
+      - name: Setup GoogleTest
+        if: ${{ inputs.is-required-googletest }}
+        uses: Bacondish2023/setup-googletest@v1
+        with:
+          tag: v1.12.0
+          build-type: ${{ inputs.build-type-library }}
+
+      # Boost
+      - name: Setup Boost
+        if: ${{ inputs.is-required-boost }}
+        uses: MarkusJx/install-boost@v2.5.1
+        id: setup-boost
+        with:
+          boost_version: 1.84.0
+          link: static
+
+        # Add CMake search path. (If "*/bin" is stored, CMake searches its parent path.)
+        # So, this action adds <instllation_area>\bin to PATH.
+        # And add library path.
+      - name: Setup Boost Path
+        if: (inputs.is-required-boost) && ((runner.os == 'Linux') || (runner.os == 'macOs'))
+        run:    |
+                echo "BOOST_ROOT=${{ steps.setup-boost.outputs.BOOST_ROOT }}" >> ${GITHUB_ENV}
+                echo "CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:${{ steps.setup-boost.outputs.BOOST_ROOT }}" >> ${GITHUB_ENV}
+        shell: bash
+
+      - name: Setup Boost Path
+        if: (inputs.is-required-boost) && (runner.os == 'Windows')
+        run:    |
+                echo "BOOST_ROOT=${{ steps.setup-boost.outputs.BOOST_ROOT }}" | Out-File -FilePath ${env:GITHUB_ENV} -Append
+                echo "CMAKE_PREFIX_PATH=${env:CMAKE_PREFIX_PATH};${{ steps.setup-boost.outputs.BOOST_ROOT }}" | Out-File -FilePath ${env:GITHUB_ENV} -Append
+        shell: pwsh
+
+      # Cppcheck
+      - name: Setup Cppcheck
+        if: (inputs.is-required-cppcheck) && (runner.os == 'Linux')
+        run:    |
+                sudo apt-get update
+                sudo apt-get install -y cppcheck
+                cppcheck --version
+
+      - name: Setup Cppcheck
+        if: (inputs.is-required-cppcheck) && (runner.os == 'macOs')
+        run:    |
+                brew update
+                brew install cppcheck
+                cppcheck --version
+
+      - name: Setup Cppcheck
+        if: (inputs.is-required-cppcheck) && (runner.os == 'Windows')
+        run:    |
+                winget install --id Cppcheck.Cppcheck --silent --accept-source-agreements --accept-package-agreements
+                echo "C:\Program Files\Cppcheck" | Out-File -FilePath ${env:GITHUB_PATH} -Encoding utf8 -Append
+                echo "CPPCHECK_DATA=C:\Program Files\Cppcheck\cfg" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
+                cppcheck --version
+        # Define CPPCHECK_DATA to tell configuration directory path
+        # to avoid error as shown below:
+        #     cppcheck: Failed to load library configuration file 'std.cfg'. File not found
+        #
+
+      ##################################################
+      # Build
+      ##################################################
+      - name: Build
+        if: (runner.os == 'Linux') || (runner.os == 'macOs')
+        run: ./do_build.sh
+
+      - name: Build
+        if: runner.os == 'Windows'
+        run: .\do_build.bat
+
+      ##################################################
+      # Lint
+      ##################################################
+      - name: Lint
+        if: (runner.os == 'Linux') || (runner.os == 'macOs')
+        run: ./do_lint.sh
+
+      - name: Lint
+        if: runner.os == 'Windows'
+        run: .\do_lint.bat
+
+      ##################################################
+      # Test
+      ##################################################
+      - name: Test
+        if: (runner.os == 'Linux') || (runner.os == 'macOs')
+        run: ./do_test.sh
+
+      - name: Test
+        if: runner.os == 'Windows'
+        run: .\do_test.bat

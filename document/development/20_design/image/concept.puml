@@ -1,0 +1,39 @@
+@startuml
+
+title Concept of hdk_dev_tool
+
+folder "hdk_dev_tool" #line:OrangeRed {
+    rectangle "Reusable Workflow: integration-gate" as integration_gate_workflows
+    collections "Generic Project Operation Scripts" as scripts
+
+    note bottom of scripts
+    Define interfaces
+    for generic project operations
+    such as build, lint, test, and clean.
+    end note
+}
+
+folder "foo project" as project {
+    rectangle "Integration Workflow" as integration_workflow
+    rectangle "Main Branch Verification Workflow" as main_branch_verification_workflow
+    collections "Copied Scripts\n(These serve as interfaces for the foo project)" as scripts_copied
+
+    note bottom of scripts_copied
+    Users can modify the copied scripts
+    to add project-specific settings.
+    If no customization is required,
+    users can use the default ones.
+    end note
+}
+
+actor "Author\n(User)" as author
+
+author -right-> scripts_copied: "Uses"
+
+scripts ---> scripts_copied: "Copied"
+
+integration_workflow ---> integration_gate_workflows: "Invokes"
+main_branch_verification_workflow ---> integration_gate_workflows: "Invokes"
+integration_gate_workflows ---> scripts_copied: "Invokes"
+
+@enduml

@@ -1,0 +1,17 @@
+name: Integration
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize # Pushed to PR branch. The author would push a fix commit to the branch
+      - reopened
+  workflow_dispatch:
+
+jobs:
+  Integration:
+    uses: ./.github/workflows/integration-gate.yml
+    with:
+      # Use macos-15-intel runner to avoid error on arm
+      platforms: '["ubuntu-latest", "windows-latest", "macos-15-intel"]'
+      build-type-library: "Debug"

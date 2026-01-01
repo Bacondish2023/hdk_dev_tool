@@ -1,0 +1,91 @@
+@startuml
+
+title Expected Usage of hdk_dev_tool
+
+actor "Author\n(User)" as author
+actor "Reviewer\n(User)" as reviewer
+
+boundary "Development Platform\n(Example: GitHub)" as platform
+
+participant "Integration Workflow\n(in foo project)" as integration_workflow
+participant "Main Branch Verification Workflow\n(in foo project)" as main_branch_verification_workflow
+participant "Reusable Workflow: integration-gate\n(in hdk_dev_tool)" as integration_gate_workflow
+
+autonumber 1.1
+
+note right of author
+The author verifies changes
+using the copied scripts
+in the foo project.
+end note
+
+author -> platform: Push changes to the integration branch
+author -> platform: Open a pull request
+
+platform -> integration_workflow: Trigger
+activate integration_workflow
+
+note right of integration_workflow
+The Integration Workflow
+is configured to start
+on pull requests.
+end note
+
+integration_workflow -> integration_gate_workflow: Invoke
+deactivate integration_workflow
+activate integration_gate_workflow
+
+note right of integration_gate_workflow
+The workflow verifies changes
+using the copied scripts
+in the foo project.
+end note
+
+integration_gate_workflow -> integration_workflow: Result
+deactivate integration_gate_workflow
+activate integration_workflow
+
+integration_workflow -> platform: Result
+deactivate integration_workflow
+
+note right of platform
+The platform sends an email
+if the workflow fails.
+end note
+
+... A few moments later ...
+
+reviewer -> platform: Review changes and results
+reviewer -> platform: Accept the changes
+
+platform -> platform: Merge changes into the main branch
+platform -> main_branch_verification_workflow: Trigger
+activate main_branch_verification_workflow
+
+note right of main_branch_verification_workflow
+The Main Branch Verification Workflow
+is configured to start
+on pushes to the main branch.
+end note
+
+main_branch_verification_workflow -> integration_gate_workflow: Invoke
+deactivate main_branch_verification_workflow
+activate integration_gate_workflow
+
+integration_gate_workflow -> main_branch_verification_workflow: Result
+deactivate integration_gate_workflow
+activate main_branch_verification_workflow
+
+main_branch_verification_workflow -> platform: Result
+deactivate main_branch_verification_workflow
+
+note right of platform
+The platform sends an email
+if the workflow fails.
+end note
+
+... A few moments later ...
+
+author -> platform: Remove the integration branch (optional)
+
+@enduml

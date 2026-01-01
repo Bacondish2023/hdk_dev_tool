@@ -1,0 +1,9 @@
+# Temporary items
+__pycache__
+build/
+dist/
+*.egg-info/
+
+# Copied files in test
+*.sh
+*.bat

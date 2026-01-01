@@ -1,0 +1,15 @@
+name: MainBranchVerification
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'master'
+
+jobs:
+  MainBranchVerification:
+    uses: ./.github/workflows/integration-gate.yml
+    with:
+      # Use macos-15-intel runner to avoid error on arm
+      platforms: '["ubuntu-latest", "windows-latest", "macos-15-intel"]'
+      build-type-library: "Debug"
