@@ -1,0 +1,6 @@
+# Temporary directories
+zzz_build/
+
+# Copied files in test
+*.sh
+*.bat
