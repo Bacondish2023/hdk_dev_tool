@@ -1,7 +1,9 @@
 #!/bin/bash
+# Copyright (c) 2026 Hidekazu TAKAHASHI
+# SPDX-License-Identifier: MIT
+# Source: https://github.com/Bacondish2023/hdk_dev_tool
 #
-# @brief    Runs tests
-# @details  This script is developed in the hdk_dev_tool project.
+# This script runs tests
 #
 
 BUILD_DIR=zzz_build

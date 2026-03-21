@@ -1,7 +1,6 @@
 #!/bin/bash
-#
-# @brief    Removes deliverables and temporaries
-# @details  Do NOT copy this script because this is not generic.
+# This script removes deliverables and temporaries
+# Do NOT copy this script because this is not generic.
 #
 
 SCRIPT_FILE=`basename $0`

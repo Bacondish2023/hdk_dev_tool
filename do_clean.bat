@@ -1,7 +1,6 @@
 @echo off
-rem
-rem @brief    Removes deliverables and temporaries
-rem @details  Do NOT copy this script because this is not generic.
+rem This script removes deliverables and temporaries
+rem Do NOT copy this script because this is not generic.
 rem
 
 setlocal enabledelayedexpansion

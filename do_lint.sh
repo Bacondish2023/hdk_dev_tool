@@ -1,7 +1,6 @@
 #!/bin/bash
-#
-# @brief    Runs lint
-# @details  Do NOT copy this script because this is not generic.
+# This script runs lint
+# Do NOT copy this script because this is not generic.
 #
 
 SCRIPT_FILE=`basename $0`

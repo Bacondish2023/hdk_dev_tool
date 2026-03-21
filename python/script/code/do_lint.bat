@@ -1,7 +1,9 @@
 @echo off
+rem Copyright (c) 2026 Hidekazu TAKAHASHI
+rem SPDX-License-Identifier: MIT
+rem Source: https://github.com/Bacondish2023/hdk_dev_tool
 rem
-rem @brief    Runs lint
-rem @details  This script is developed in the hdk_dev_tool project.
+rem This script runs lint
 rem
 
 setlocal enabledelayedexpansion

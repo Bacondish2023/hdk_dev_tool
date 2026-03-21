@@ -1,7 +1,9 @@
 #!/bin/bash
+# Copyright (c) 2026 Hidekazu TAKAHASHI
+# SPDX-License-Identifier: MIT
+# Source: https://github.com/Bacondish2023/hdk_dev_tool
 #
-# @brief    Removes deliverables and temporaries
-# @details  This script is developed in the hdk_dev_tool project.
+# This script removes deliverables and temporaries
 #
 
 SCRIPT_FILE=`basename $0`
