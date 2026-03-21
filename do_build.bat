@@ -1,7 +1,6 @@
 @echo off
-rem
-rem @brief    Creates build directory, generates build system, and builds
-rem @details  Do NOT copy this script because this is not generic.
+rem This script creates build directory, generates build system, and builds
+rem Do NOT copy this script because this is not generic.
 rem
 
 setlocal enabledelayedexpansion

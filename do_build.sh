@@ -1,7 +1,6 @@
 #!/bin/bash
-#
-# @brief    Creates build directory, generates build system, and builds
-# @details  Do NOT copy this script because this is not generic.
+# This script creates build directory, generates build system, and builds
+# Do NOT copy this script because this is not generic.
 #
 
 unset PIP_REQUIREMENTS_FILE

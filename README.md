@@ -170,5 +170,5 @@ add_custom_target(lint
 
 ## License
 
-Copyright 2026 Hidekazu TAKAHASHI.
+Copyright (c) 2026 Hidekazu TAKAHASHI  
 hdk_dev_tool is free and open-source software licensed under the **MIT License**.

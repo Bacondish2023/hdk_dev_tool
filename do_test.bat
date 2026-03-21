@@ -1,7 +1,6 @@
 @echo off
-rem
-rem @brief    Runs tests
-rem @details  Do NOT copy this script because this is not generic.
+rem This script runs tests
+rem Do NOT copy this script because this is not generic.
 rem
 
 setlocal enabledelayedexpansion
