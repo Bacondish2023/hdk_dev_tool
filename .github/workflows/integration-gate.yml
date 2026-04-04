@@ -35,6 +35,11 @@ on:
         required: false
         type: boolean
         default: true
+      is-required-papyrusrt:
+        description: "Setup switch for Papyrus-RT"
+        required: false
+        type: boolean
+        default: false
     secrets:
       token:
         description: "Access token that is used for checkout repositories. If target repository contains submodule this workflow requires permission."
@@ -132,6 +137,13 @@ jobs:
         # to avoid error as shown below:
         #     cppcheck: Failed to load library configuration file 'std.cfg'. File not found
         #
+
+      # Papyrus-RT
+      - name: Papyrus-RT
+        if: ${{ inputs.is-required-papyrusrt }}
+        uses: Bacondish2023/setup-papyrusrt@v1
+        with:
+          papyrusrt-version: 1.0.0
 
       ##################################################
       # Build
