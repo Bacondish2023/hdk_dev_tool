@@ -52,6 +52,7 @@ Parameters:
 |is-required-googletest|Setup switch for GoogleTest|No|boolean|true|
 |is-required-boost|Setup switch for Boost|No|boolean|true|
 |is-required-cppcheck|Setup switch for Cppcheck|No|boolean|true|
+|is-required-papyrusrt|Setup switch for Papyrus-RT|No|boolean|false|
 
 secrets:
 
@@ -66,7 +67,7 @@ name foo
 
 jobs:
   foo:
-    uses: Bacondish2023/hdk_dev_tool/.github/workflows/integration-gate.yml@v1.0.0
+    uses: Bacondish2023/hdk_dev_tool/.github/workflows/integration-gate.yml@v1.1.0
 ```
 
 #### Generic Project Operation Scripts
@@ -130,17 +131,13 @@ add_custom_target(lint
 )
 ```
 
+###### For Papyrus-RT Projects
+
+* hdk_dev_tool/papyrusrt/script/code/
+
 ###### For Python Projects
 
 * hdk_dev_tool/python/script/code/
-    * do_build.bat
-    * do_build.sh
-    * do_clean.bat
-    * do_clean.sh
-    * do_lint.bat
-    * do_lint.sh
-    * do_test.bat
-    * do_test.sh
 
 ## Prerequisites
 
@@ -162,11 +159,18 @@ add_custom_target(lint
 |Cppcheck|A static source code analysis tool|**Yes**|
 |Python 3|-|**Yes**|
 |integration_test_plugin|A Python3 package for integration test|No (Installation is performed on build script)|
+|Papyrus-RT|A UMR-RT based software development tool<br>Environment variables **PAPYRUSRT_ROOT** and **UMLRTS_ROOT** are also required|**Yes**|
+|model_compiler_for_papyrusrt|A build tool for projects using Papyrus-RT|No (Installation is performed on build script)|
+
+The environment variable **PAPYRUSRT_ROOT** must specify the path to the Papyrus-RT directory.  
+The environment variable **UMLRTS_ROOT** must specify the path to the RTS library source directory.
+In Papyrus-RT v1.0.0, the library is located at `[your_installation_area]/Papyrus-RT/plugins/org.eclipse.papyrusrt.rts_1.0.0.201707181457/umlrts` .
 
 ## Document
 
 * [Requirements](document/development/10_requirements/requirements.md)
 * [Design](document/development/20_design/design.md)
+* [Papyrus-RT: Quick Reference](document/papyrusrt/papyrusrt_v1.0_quick_reference.md)
 
 ## License
 

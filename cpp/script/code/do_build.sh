@@ -2,6 +2,7 @@
 # Copyright (c) 2026 Hidekazu TAKAHASHI
 # SPDX-License-Identifier: MIT
 # Source: https://github.com/Bacondish2023/hdk_dev_tool
+# Version: 1.1.0
 #
 # This script creates build directory, generates build system, and builds
 #

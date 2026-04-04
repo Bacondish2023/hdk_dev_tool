@@ -5,6 +5,7 @@
 *.h	text
 *.cpp	text
 *.hpp	text
+*.py	text
 
 *.md	text
 LICENSE	text
@@ -16,3 +17,8 @@ LICENSE	text
 
 *.bat	text
 *.sh	text
+
+# papyrus-rt model
+*.di	text
+*.notation	text
+*.uml	text

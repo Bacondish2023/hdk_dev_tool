@@ -13,12 +13,12 @@ import integration_test_plugin.process_verifier as process_verifier
 import integration_test_plugin.path_verifier as path_verifier
 
 
-class Test_300_TestNg(unittest.TestCase):
+class Test_200_LintFailure(unittest.TestCase):
 
     def setUp(self):
         self.__path_at_start = os.getcwd()
-        self.__path_exmaple_project = 'python' + os.sep + 'script' + os.sep + 'test' + os.sep + '300_test_ng'
-        self.__path_code_dir = 'python' + os.sep + 'script' + os.sep + 'code'
+        self.__path_exmaple_project = 'cpp' + os.sep + 'script' + os.sep + 'test' + os.sep + '200_lint_failure'
+        self.__path_code_dir = 'cpp' + os.sep + 'script' + os.sep + 'code'
 
         self.__list_script_filename = (
             'do_build.bat',
@@ -37,6 +37,7 @@ class Test_300_TestNg(unittest.TestCase):
             path_copy_destination = self.__path_exmaple_project + os.sep + filename
 
             shutil.copy2(path_copy_source, path_copy_destination)
+
 
         self.__command_build = _get_command('do_build')
         self.__command_clean = _get_command('do_clean')
@@ -71,18 +72,28 @@ class Test_300_TestNg(unittest.TestCase):
                 os.remove(path_script)
 
 
-    def test_typical(self):
-        # Test
+    def test_lint_failure(self):
+        # Build
         self.__process = subprocess.Popen(
-            args=(self.__command_test),
+            args=(self.__command_build),
             stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
+            #stderr=subprocess.STDOUT,
+            universal_newlines=True)
+        process_verifier_instance = process_verifier.ProcessVerifier(self.__process)
+
+        process_verifier_instance.assertExit(exit_code = 0, timeout = 60)
+
+        # Lint
+        self.__process = subprocess.Popen(
+            args=(self.__command_lint),
+            stdout=subprocess.PIPE,
+            #stderr=subprocess.STDOUT,
             universal_newlines=True)
         process_verifier_instance = process_verifier.ProcessVerifier(self.__process)
         stream_verifier_instance = stream_verifier.StreamVerifier(self.__process.stdout)
 
-        stream_verifier_instance.assertPattern('do_test: Starts')
-        stream_verifier_instance.assertPattern('do_test: Test failed')
+        stream_verifier_instance.assertPattern('do_lint: Starts')
+        stream_verifier_instance.assertPattern('do_lint: Lint failed')
         process_verifier_instance.assertExit(exit_code = 1, timeout = 60)
 
 
