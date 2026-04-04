@@ -13,12 +13,12 @@ import integration_test_plugin.process_verifier as process_verifier
 import integration_test_plugin.path_verifier as path_verifier
 
 
-class Test_300_TestNg(unittest.TestCase):
+class Test_200_LintFailure(unittest.TestCase):
 
     def setUp(self):
         self.__path_at_start = os.getcwd()
-        self.__path_exmaple_project = 'cpp' + os.sep + 'script' + os.sep + 'test' + os.sep + '300_test_ng'
-        self.__path_code_dir = 'cpp' + os.sep + 'script' + os.sep + 'code'
+        self.__path_exmaple_project = 'papyrusrt' + os.sep + 'script' + os.sep + 'test' + os.sep + '200_lint_failure'
+        self.__path_code_dir = 'papyrusrt' + os.sep + 'script' + os.sep + 'code'
 
         self.__list_script_filename = (
             'do_build.bat',
@@ -29,6 +29,9 @@ class Test_300_TestNg(unittest.TestCase):
             'do_lint.sh',
             'do_test.bat',
             'do_test.sh',
+            'librts.cmake',
+            'start_papyrusrt.bat',
+            'start_papyrusrt.sh',
         )
 
         # Copy scripts
@@ -42,6 +45,7 @@ class Test_300_TestNg(unittest.TestCase):
         self.__command_clean = _get_command('do_clean')
         self.__command_lint = _get_command('do_lint')
         self.__command_test = _get_command('do_test')
+        self.__command_start_papyrusrt = _get_command('start_papyrusrt')
 
         self.__process = None
 
@@ -63,6 +67,14 @@ class Test_300_TestNg(unittest.TestCase):
         if os.path.isdir(path_temporary_directory):
             shutil.rmtree(path_temporary_directory)
 
+        path_temporary_directory = self.__path_exmaple_project + os.sep + 'zzz_codegen'
+        if os.path.isdir(path_temporary_directory):
+            shutil.rmtree(path_temporary_directory)
+
+        path_temporary_directory = self.__path_exmaple_project + os.sep + 'zzz_workspace'
+        if os.path.isdir(path_temporary_directory):
+            shutil.rmtree(path_temporary_directory)
+
         # Remove scripts
         for filename in self.__list_script_filename:
             path_script = self.__path_exmaple_project + os.sep + filename
@@ -71,7 +83,7 @@ class Test_300_TestNg(unittest.TestCase):
                 os.remove(path_script)
 
 
-    def test_test_ng(self):
+    def test_lint_failure(self):
         # Build
         self.__process = subprocess.Popen(
             args=(self.__command_build),
@@ -80,19 +92,19 @@ class Test_300_TestNg(unittest.TestCase):
             universal_newlines=True)
         process_verifier_instance = process_verifier.ProcessVerifier(self.__process)
 
-        process_verifier_instance.assertExit(exit_code = 0, timeout = 60)
+        process_verifier_instance.assertExit(exit_code = 0, timeout = 240)
 
-        # Test
+        # Lint
         self.__process = subprocess.Popen(
-            args=(self.__command_test),
+            args=(self.__command_lint),
             stdout=subprocess.PIPE,
-            stderr=subprocess.DEVNULL, # Dispose of unwanted error message
+            #stderr=subprocess.STDOUT,
             universal_newlines=True)
         process_verifier_instance = process_verifier.ProcessVerifier(self.__process)
         stream_verifier_instance = stream_verifier.StreamVerifier(self.__process.stdout)
 
-        stream_verifier_instance.assertPattern('do_test: Starts')
-        stream_verifier_instance.assertPattern('do_test: Test failed')
+        stream_verifier_instance.assertPattern('do_lint: Starts')
+        stream_verifier_instance.assertPattern('do_lint: Lint failed')
         process_verifier_instance.assertExit(exit_code = 1, timeout = 60)
 
 

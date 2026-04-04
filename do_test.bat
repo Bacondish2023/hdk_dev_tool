@@ -17,8 +17,24 @@ if !RESULT_OF_COMMAND! NEQ 0 (
   exit /B 1
 )
 
+rem Test Papyrus-RT
+python -B -m unittest discover --verbose --start-directory papyrusrt/script/test --pattern "*.py"
+set RESULT_OF_COMMAND=!ERRORLEVEL!
+if !RESULT_OF_COMMAND! NEQ 0 (
+  echo !SCRIPT_NAME!: Test failed. Return code is: !RESULT_OF_COMMAND!
+  exit /B 1
+)
+
 rem Test Python
 python -B -m unittest discover --verbose --start-directory python/script/test --pattern "test_[0-9]*.py"
+set RESULT_OF_COMMAND=!ERRORLEVEL!
+if !RESULT_OF_COMMAND! NEQ 0 (
+  echo !SCRIPT_NAME!: Test failed. Return code is: !RESULT_OF_COMMAND!
+  exit /B 1
+)
+
+rem Test Tool
+python -B -m unittest discover --verbose --start-directory tool/test --pattern "test_*.py"
 set RESULT_OF_COMMAND=!ERRORLEVEL!
 if !RESULT_OF_COMMAND! NEQ 0 (
   echo !SCRIPT_NAME!: Test failed. Return code is: !RESULT_OF_COMMAND!

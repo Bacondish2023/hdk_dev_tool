@@ -13,12 +13,12 @@ import integration_test_plugin.process_verifier as process_verifier
 import integration_test_plugin.path_verifier as path_verifier
 
 
-class Test_100_BuildNg(unittest.TestCase):
+class Test_101_BuildFailure(unittest.TestCase):
 
     def setUp(self):
         self.__path_at_start = os.getcwd()
-        self.__path_exmaple_project = 'cpp' + os.sep + 'script' + os.sep + 'test' + os.sep + '100_build_ng'
-        self.__path_code_dir = 'cpp' + os.sep + 'script' + os.sep + 'code'
+        self.__path_exmaple_project = 'papyrusrt' + os.sep + 'script' + os.sep + 'test' + os.sep + '101_build_failure'
+        self.__path_code_dir = 'papyrusrt' + os.sep + 'script' + os.sep + 'code'
 
         self.__list_script_filename = (
             'do_build.bat',
@@ -29,6 +29,9 @@ class Test_100_BuildNg(unittest.TestCase):
             'do_lint.sh',
             'do_test.bat',
             'do_test.sh',
+            'librts.cmake',
+            'start_papyrusrt.bat',
+            'start_papyrusrt.sh',
         )
 
         # Copy scripts
@@ -42,6 +45,7 @@ class Test_100_BuildNg(unittest.TestCase):
         self.__command_clean = _get_command('do_clean')
         self.__command_lint = _get_command('do_lint')
         self.__command_test = _get_command('do_test')
+        self.__command_start_papyrusrt = _get_command('start_papyrusrt')
 
         self.__process = None
 
@@ -63,6 +67,14 @@ class Test_100_BuildNg(unittest.TestCase):
         if os.path.isdir(path_temporary_directory):
             shutil.rmtree(path_temporary_directory)
 
+        path_temporary_directory = self.__path_exmaple_project + os.sep + 'zzz_codegen'
+        if os.path.isdir(path_temporary_directory):
+            shutil.rmtree(path_temporary_directory)
+
+        path_temporary_directory = self.__path_exmaple_project + os.sep + 'zzz_workspace'
+        if os.path.isdir(path_temporary_directory):
+            shutil.rmtree(path_temporary_directory)
+
         # Remove scripts
         for filename in self.__list_script_filename:
             path_script = self.__path_exmaple_project + os.sep + filename
@@ -71,7 +83,7 @@ class Test_100_BuildNg(unittest.TestCase):
                 os.remove(path_script)
 
 
-    def test_build_ng(self):
+    def test_build_failure(self):
         # Build
         self.__process = subprocess.Popen(
             args=(self.__command_build),
@@ -85,6 +97,8 @@ class Test_100_BuildNg(unittest.TestCase):
         stream_verifier_instance.assertPattern('do_build: Checkouts submodules')
         stream_verifier_instance.assertPattern('do_build: Skips to install Python packages')
         stream_verifier_instance.assertPattern('do_build: Generates build system')
+        stream_verifier_instance.assertPattern('do_build: Generates codes')
+        stream_verifier_instance.assertPattern('do_build: Builds', timeout = 180)
         stream_verifier_instance.assertPattern('do_build: Failed to build')
         process_verifier_instance.assertExit(exit_code = 1, timeout = 60)
 

@@ -2,6 +2,7 @@
 rem Copyright (c) 2026 Hidekazu TAKAHASHI
 rem SPDX-License-Identifier: MIT
 rem Source: https://github.com/Bacondish2023/hdk_dev_tool
+rem Version: 1.1.0
 rem
 rem This script creates build directory, generates build system, and builds
 rem
