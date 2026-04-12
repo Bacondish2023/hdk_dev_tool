@@ -105,7 +105,7 @@ class Test_002_SuccessPipRequirements(unittest.TestCase):
         stream_verifier_instance.assertPattern('do_build: Installs Python packages')
         stream_verifier_instance.assertPattern('do_build: Generates build system')
         stream_verifier_instance.assertPattern('do_build: Generates codes')
-        stream_verifier_instance.assertPattern('do_build: Builds', timeout = 90)
+        stream_verifier_instance.assertPattern('do_build: Builds', timeout = 180)
         stream_verifier_instance.assertPattern('do_build: Exits successfully')
         process_verifier_instance.assertExit(exit_code = 0, timeout = 60)
         path_verifier.assertDirectoryExist('zzz_build')

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:RTCppProperties="http://www.eclipse.org/papyrus/umlrt/cppproperties" xmlns:UMLRealTime="http://www.eclipse.org/papyrus/umlrt" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <uml:Model xmi:id="_LHJIkDC_EfGJIOKDQI1P1w" name="Experiment">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LHJIkTC_EfGJIOKDQI1P1w" source="http://www.eclipse.org/papyrus-rt/language/1.0.0">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_LHJIkjC_EfGJIOKDQI1P1w" key="language" value="umlrt-cpp"/>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Class" xmi:id="_yTfMQDC_EfGJIOKDQI1P1w" name="TopExperiment" isActive="true"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_svvoIDDFEfGfKY_1205EHg" name="Number">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_svvoITDFEfGfKY_1205EHg" name="value" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_svvoIjDFEfGfKY_1205EHg" value="0"/>
+      </ownedAttribute>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_svvoIzDFEfGfKY_1205EHg" specification="_svvoKzDFEfGfKY_1205EHg">
+        <language>C++</language>
+        <body>const int bufsize = 16;&#xD;
+char buf[bufsize];&#xD;
+&#xD;
+std::printf(&quot;%s\n&quot;, getStr(buf, bufsize));&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_svvoJDDFEfGfKY_1205EHg" specification="_svvoJzDFEfGfKY_1205EHg">
+        <language>C++</language>
+        <body>std::snprintf(buf, size, &quot;%d&quot;, value);&#xD;
+return buf;&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_svvoJTDFEfGfKY_1205EHg" specification="_svvoMDDFEfGfKY_1205EHg">
+        <language>C++</language>
+        <body>return !(*this == rhs);&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_svvoJjDFEfGfKY_1205EHg" specification="_svvoLTDFEfGfKY_1205EHg">
+        <language>C++</language>
+        <body>return this->value == rhs.value;&#xD;
+</body>
+      </ownedBehavior>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_svvoJzDFEfGfKY_1205EHg" name="getStr" method="_svvoJDDFEfGfKY_1205EHg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_svvoKDDFEfGfKY_1205EHg" name="buf">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_5lVhgBydEduyofBvg4RL2w"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_svvoKjDFEfGfKY_1205EHg" name="size">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_svvoKTDFEfGfKY_1205EHg" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_5lVhgBydEduyofBvg4RL2w"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_svvoKzDFEfGfKY_1205EHg" name="print" method="_svvoIzDFEfGfKY_1205EHg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_svvoLDDFEfGfKY_1205EHg" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_8I6RgBydEduyofBvg4RL2w"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_svvoLTDFEfGfKY_1205EHg" name="operator==" method="_svvoJjDFEfGfKY_1205EHg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_svvoLjDFEfGfKY_1205EHg" name="rhs" type="_svvoIDDFEfGfKY_1205EHg"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_svvoLzDFEfGfKY_1205EHg" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_vAIV4I7PEdySGvm5GN66HA"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_svvoMDDFEfGfKY_1205EHg" name="operator!=" method="_svvoJTDFEfGfKY_1205EHg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_svvoMTDFEfGfKY_1205EHg" name="rhs" type="_svvoIDDFEfGfKY_1205EHg"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_svvoMjDFEfGfKY_1205EHg" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_vAIV4I7PEdySGvm5GN66HA"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_FtzFgDDkEfGLF5cASk_uvA" name="TypeSupport">
+      <packagedElement xmi:type="uml:Class" xmi:id="_nn_TEDDkEfGLF5cASk_uvA" name="MySizeT"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_eQfZMDW7EfGG_INE1RaMbg" name="HolderMySizeT">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_ua0SwDW7EfGG_INE1RaMbg" name="attribute_" visibility="private" type="_nn_TEDDkEfGLF5cASk_uvA"/>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_LHJIkzC_EfGJIOKDQI1P1w">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LHJIlDC_EfGJIOKDQI1P1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/umlrt#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_RT_PROFILE/uml-rt.profile.uml#_1h74oEeVEeO0lv5O1DTHOQ"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_LHJIlTC_EfGJIOKDQI1P1w">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LHJIljC_EfGJIOKDQI1P1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/umlrt/statemachine#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_RT_PROFILE/UMLRealTimeSM-addendum.profile.uml#_KLcn0FDtEeOA4ecmvfqvaw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_LHJIlzC_EfGJIOKDQI1P1w">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LHJImDC_EfGJIOKDQI1P1w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/umlrt/cppproperties#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UMLRT_CPP/RTCppProperties.profile.uml#_vl5LALs8EeSTjNEQkASznQ"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLRealTime:Capsule xmi:id="_yVNDgDC_EfGJIOKDQI1P1w" base_Class="_yTfMQDC_EfGJIOKDQI1P1w"/>
+  <RTCppProperties:PassiveClassProperties xmi:id="_v_80oDDFEfGfKY_1205EHg" generateDefaultConstructor="false" generateDestructor="false" implementationPreface="#include &lt;cstdio>" base_Class="_svvoIDDFEfGfKY_1205EHg" publicDeclarations="Number():&#xD;&#xA;    value(0)&#xD;&#xA;{&#xD;&#xA;    /* nothing to do */&#xD;&#xA;}&#xD;&#xA;Number(int a):&#xD;&#xA;    value(a)&#xD;&#xA;{&#xD;&#xA;    /* nothing to do */&#xD;&#xA;}&#xD;&#xA;virtual ~Number()&#xD;&#xA;{&#xD;&#xA;    /* nothing to do */&#xD;&#xA;}&#xD;&#xA;"/>
+  <RTCppProperties:OperationProperties xmi:id="_HrcZkDDGEfGfKY_1205EHg" base_Operation="_svvoLTDFEfGfKY_1205EHg"/>
+  <RTCppProperties:OperationProperties xmi:id="_IkF40DDGEfGfKY_1205EHg" base_Operation="_svvoMDDFEfGfKY_1205EHg"/>
+  <RTCppProperties:ParameterProperties xmi:id="_gaDoYDDGEfGfKY_1205EHg" base_Parameter="_svvoKDDFEfGfKY_1205EHg" pointsToType="true"/>
+  <RTCppProperties:ParameterProperties xmi:id="_hHumsDDGEfGfKY_1205EHg" base_Parameter="_svvoKTDFEfGfKY_1205EHg" pointsToType="true"/>
+  <RTCppProperties:PassiveClassProperties xmi:id="_NOG_0DDlEfGLF5cASk_uvA" generateStateMachine="false" generateAssignmentOperator="false" generateCopyConstructor="false" generateDefaultConstructor="false" generateDestructor="false" headerPreface="typedef size_t MySizeT;&#xD;&#xA;&#xD;&#xA;extern const UMLRTObject_class UMLRTType_MySizeT;&#xD;&#xA;&#xD;&#xA;#if 0 // Does not exist&#xD;&#xA;" headerEnding="#endif&#xD;&#xA;" implementationPreface="const UMLRTObject_field MySizeT_fields[] = &#xD;&#xA;{&#xD;&#xA;    // Define placeholder element that is not used&#xD;&#xA;    // to avoid compilation error caused by zero-length array.&#xD;&#xA;    {&#xD;&#xA;        &quot;placeholder&quot;,  // name&#xD;&#xA;        &amp;UMLRTType_int, // desc&#xD;&#xA;        0,  // offset&#xD;&#xA;        1,  // arraySize&#xD;&#xA;        0   // ptrIndirection&#xD;&#xA;    }&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;const UMLRTObject_class UMLRTType_MySizeT = &#xD;&#xA;{&#xD;&#xA;    UMLRTObjectInitialize&lt;MySizeT>,&#xD;&#xA;    UMLRTObjectCopy&lt;MySizeT>,&#xD;&#xA;    UMLRTObject_decode,&#xD;&#xA;    UMLRTObject_encode,&#xD;&#xA;    UMLRTObjectDestroy&lt;MySizeT>,&#xD;&#xA;    UMLRTObject_fprintf,&#xD;&#xA;    &quot;MySizeT&quot;,&#xD;&#xA;    NULL,&#xD;&#xA;    {&#xD;&#xA;        sizeof( MySizeT ),&#xD;&#xA;        0,&#xD;&#xA;        MySizeT_fields&#xD;&#xA;    },&#xD;&#xA;    UMLRTOBJECTCLASS_DEFAULT_VERSION,&#xD;&#xA;    UMLRTOBJECTCLASS_DEFAULT_BACKWARDS&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;#if 0 // Does not exist&#xD;&#xA;" implementationEnding="#endif&#xD;&#xA;" base_Class="_nn_TEDDkEfGLF5cASk_uvA" kind="Typedef" implementationType=""/>
+  <RTCppProperties:PassiveClassProperties xmi:id="_hn1IcDW7EfGG_INE1RaMbg" generateDefaultConstructor="false" generateDestructor="false" headerPreface="" implementationPreface="HolderMySizeT::HolderMySizeT()&#xD;&#xA;:   attribute_(1)&#xD;&#xA;{&#xD;&#xA;    // Nothing to do&#xD;&#xA;}&#xD;&#xA;" base_Class="_eQfZMDW7EfGG_INE1RaMbg" publicDeclarations="HolderMySizeT();&#xD;&#xA;"/>
+</xmi:XMI>

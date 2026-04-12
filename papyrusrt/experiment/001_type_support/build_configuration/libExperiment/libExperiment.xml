@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildConfiguration version="1.0">
+    <targetName>libExperiment</targetName>
+    <targetType>library</targetType>
+    <topCapsuleName>TopExperiment</topCapsuleName>
+    <modelFile>model/Experiment.uml</modelFile>
+    <sources>
+        <source>TopExperiment</source>
+        <source>Number</source>
+        <source>MySizeT</source>
+        <source>HolderMySizeT</source>
+    </sources>
+    <controllerSetting/>
+    <includeDirectories>
+        <includeDirectory>src</includeDirectory>
+    </includeDirectories>
+    <compileArgument>-DNEED_NON_FLEXIBLE_ARRAY</compileArgument>
+    <libraries>
+        <library>librts</library>
+    </libraries>
+    <libraryDirectories/>
+    <linkArgument/>
+    <userDeclarationPreface/>
+    <userDeclarationBeforeTarget/>
+    <userDeclarationAfterTarget/>
+    <userDeclarationEnding/>
+</buildConfiguration>
