@@ -255,7 +255,7 @@ The following methods are available for defining a custom constructor:
 | Method | Pros | Cons |
 |:---|:---|:---|
 | Option 1 | Allows member initializer list to be generated in the constructor implementation | The constructor is not visible in the Model Explorer |
-| Option 2 | The constructor can be defined in the same way as a regular operation<br>Therefore, it is visible in the Model Explorer | Mmeber initializer list cannot be used |
+| Option 2 | The constructor can be defined in the same way as a regular operation<br>Therefore, it is visible in the Model Explorer | Member initializer list cannot be used |
 
 ###### Option1
 
