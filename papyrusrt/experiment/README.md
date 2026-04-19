@@ -133,3 +133,156 @@ This demonstrates that user-defined aliases can be integrated into the model.
 
 * Manual type definition in the model is required.
 * It is not clear how to define type aliases that use dynamic memory allocation such as `std::string`.
+
+
+## Sub-Project Integration
+
+#### Purpose
+
+The goal is to create a reusable package that contains reusable models,
+and to enable projects to integrate this package in order to improve development efficiency.
+
+However, the method for handling reusable packages in Papyrus-RT is not clearly documented.
+Therefore, in this experiment, we attempt to create a reusable package and integrate it into a project using Papyrus-RT.
+
+#### Procedure
+
+In this experiment, we create:
+
+* a directory `SubProject` that represents a reusable package repository
+* a model `Experiment` that uses the reusable package.
+
+Although `SubProject` is simply a directory in this experiment,
+it is intended to represent an external repository integrated via Git submodule in a real use case.
+
+First, models are created with the following directory structure:
+
+```
++---Experiment/
+|   +---Experiment.di
+|   +---Experiment.notation
+|   +---Experiment.uml
+|
++---SubProject/
+    +---SubProject.di
+    +---SubProject.notation
+    +---SubProject.uml
+    +---build_configuration/
+        +---top_build_configuration.xml
+        +---libSubProject/
+            +---libSubProject.xml
+```
+
+The SubProject model contains:
+
+* a capsule `TopSubProject`
+* a class `Number`
+
+When built, it produces the `libSubProject` library.
+
+To use a reusable package in a Papyrus-RT project,
+the package must be imported into the project model.
+The import is performed as follows:
+
+1. Open both the `Experiment` model and the `SubProject` model (same as normal model opening).
+1. In the Model Explorer, right-click on Experiment and select: `Import > Import Package From User Model`
+1. In the wizard, select `SubProject` to complete the import.
+
+![002_subproject_integration_01](image/002_subproject_integration_01.png)
+
+After importing, types defined in the `SubProject` model become available in `Experiment`.
+
+For example, adding an attribute of type `Number` (defined in `SubProject`)
+to the `TopExperiment` capsule in `Experiment` results in the following:
+
+![002_subproject_integration_02](image/002_subproject_integration_02.png)
+
+The models created in this experiment were successfully built using:
+
+* Code generation in Papyrus-RT
+* CLI build using `model_compiler_for_papyrusrt`
+
+#### Limitation
+
+The integration method explored in this experiment imposes constraints
+on the directory structure of the models.
+
+After adding an attribute of type `Number` to `TopExperiment`, the `Experiment.uml` contains:
+
+```xml
+...
+<ownedAttribute xmi:type="uml:Property" xmi:id="_V7e_UDmbEfG0O5_HKgIZMg" name="attribute" visibility="private">
+  <type xmi:type="uml:Class" href="../SubProject/SubProject.uml#_Dk3KIDmXEfGwbZlAcZB5UQ"/>
+</ownedAttribute>
+...
+```
+
+This indicates that the `Experiment` model references the `SubProject` model
+using the path: `../SubProject/SubProject.uml`.
+This path appears to be logical (model-based),
+rather than strictly reflecting the actual filesystem layout.
+
+For example, consider the following directory structure:
+
+```
++---Experiment/
+|   +---Experiment.di
+|   +---Experiment.notation
+|   +---Experiment.uml
+|
++---SubProject/
+    +---model/
+        +---SubProject.di
+        +---SubProject.notation
+        +---SubProject.uml
+        +---build_configuration/
+            +---top_build_configuration.xml
+            +---libSubProject/
+                +---libSubProject.xml
+```
+
+Even in this case, after performing import and adding the `Number` attribute,
+the reference path remains: `../SubProject/SubProject.uml`
+which does not match the actual filesystem path.
+
+In this situation:
+
+* Code generation within Papyrus-RT works correctly
+* However, CLI build using `model_compiler_for_papyrusrt` fails
+
+More specifically,
+the failure occurs during execution of the standalone Papyrus-RT code generator used by the CLI tool.
+
+Since CLI build is essential for efficient development,
+the directory structure must ensure that model reference paths match the filesystem layout.
+
+To achieve this, the following requirements must be satisfied:
+
+Requirements for the reusable repository
+
+* The repository name must match the model name
+* Model files must be located at the root of the repository
+
+Requirements for the consuming repository
+
+* The reusable model must be located at: `../ModelName/ModelName.uml` relative to the consuming model
+
+#### Results
+
+This experiment confirmed the following:
+
+* A reusable package can be integrated into a project that uses it
+* The integrated model can be successfully built
+
+In addition,
+the following requirements were identified as necessary
+to enable successful CLI builds using `model_compiler_for_papyrusrt`:
+
+Requirements for the reusable repository
+
+* The repository name must match the model name
+* Model files must be located at the root of the repository
+
+Requirements for the consuming repository
+
+* The reusable model must be located at: `../ModelName/ModelName.uml` relative to the consuming model
