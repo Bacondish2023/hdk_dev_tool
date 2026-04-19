@@ -1,0 +1,13 @@
+# Papyrus-RT
+!.project
+*.controllers
+
+# Temporary directories
+zzz_build/
+zzz_codegen/
+zzz_workspace/
+
+# Copied files in test
+*.sh
+*.bat
+*.cmake
