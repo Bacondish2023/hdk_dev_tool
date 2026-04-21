@@ -9,11 +9,11 @@ import tempfile
 import integration_test_plugin.process_verifier as process_verifier
 
 
-class Test_300_TestFailure(unittest.TestCase):
+class TestStringReplacer(unittest.TestCase):
 
     def setUp(self):
-        self.__command = ('python', '-B', 'tool' + os.sep + 'string_replacer.py')
-        self.__content = '''
+        self._command = ('python', '-B', 'tool' + os.sep + 'string_replacer.py')
+        self._content = '''
 Hello, I am test data.
 Version: 1.0.0
 '''[1:]
@@ -35,15 +35,15 @@ Version: 1.1.0
 
             # Create test file
             with open(path, mode = 'w') as fp:
-                fp.write(self.__content)
+                fp.write(self._content)
 
             # Replace
-            self.__process = subprocess.Popen(
-                args=self.__command + (path, 'Version: 1.0.0', 'Version: 1.1.0'),
+            self._process = subprocess.Popen(
+                args=self._command + (path, 'Version: 1.0.0', 'Version: 1.1.0'),
                 stdout=subprocess.PIPE,
                 #stderr=subprocess.STDOUT,
                 universal_newlines=True)
-            process_verifier_instance = process_verifier.ProcessVerifier(self.__process)
+            process_verifier_instance = process_verifier.ProcessVerifier(self._process)
 
             process_verifier_instance.assertExit(exit_code = 0, timeout = 10)
 
@@ -63,12 +63,12 @@ Version: 1.1.0
             # This test does not create test file to cause error
 
             # Replace
-            self.__process = subprocess.Popen(
-                args=self.__command + (path, 'Version: 1.0.0', 'Version: 1.1.0'),
+            self._process = subprocess.Popen(
+                args=self._command + (path, 'Version: 1.0.0', 'Version: 1.1.0'),
                 stdout=subprocess.PIPE,
                 #stderr=subprocess.STDOUT,
                 universal_newlines=True)
-            process_verifier_instance = process_verifier.ProcessVerifier(self.__process)
+            process_verifier_instance = process_verifier.ProcessVerifier(self._process)
 
             process_verifier_instance.assertExit(exit_code = 1, timeout = 10)
 
@@ -79,15 +79,15 @@ Version: 1.1.0
 
             # Create test file
             with open(path, mode = 'w') as fp:
-                fp.write(self.__content)
+                fp.write(self._content)
 
             # Replace
-            self.__process = subprocess.Popen(
-                args=self.__command + (path, '', 'Version: 1.1.0'),
+            self._process = subprocess.Popen(
+                args=self._command + (path, '', 'Version: 1.1.0'),
                 stdout=subprocess.PIPE,
                 #stderr=subprocess.STDOUT,
                 universal_newlines=True)
-            process_verifier_instance = process_verifier.ProcessVerifier(self.__process)
+            process_verifier_instance = process_verifier.ProcessVerifier(self._process)
 
             process_verifier_instance.assertExit(exit_code = 1, timeout = 10)
 
