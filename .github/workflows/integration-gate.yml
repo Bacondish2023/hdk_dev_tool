@@ -88,7 +88,7 @@ jobs:
       # Boost
       - name: Setup Boost
         if: ${{ inputs.is-required-boost }}
-        uses: MarkusJx/install-boost@v2.5.1
+        uses: MarkusJx/install-boost@v2.6.0
         id: setup-boost
         with:
           boost_version: 1.84.0
