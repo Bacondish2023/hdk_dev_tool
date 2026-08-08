@@ -14,10 +14,11 @@ def main():
     path_file = None
     old_string = None
     new_string = None
+    fail_if_no_match = False
 
     # ---> check argument
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'h', ['help'])
+        opts, args = getopt.getopt(sys.argv[1:], 'h', ['help', 'fail_if_no_match'])
     except getopt.GetoptError as err:
         print(err)
         printUsage()
@@ -27,6 +28,9 @@ def main():
         if (o == '-h') or (o == '--help'):
             printUsage()
             sys.exit(0)
+        if (o == '--fail_if_no_match'):
+            fail_if_no_match = True
+
 
     if len(args) < 3:
         printUsage()
@@ -42,6 +46,8 @@ def main():
     # <--- setting
 
     # ---> operation
+    is_old_string_found = False
+
     # Sanity check
     if not os.path.isfile(path_file):
         print('Error: Specified path "{0}" is not file'.format(path_file))
@@ -56,6 +62,10 @@ def main():
     with open(path_file, mode = 'r') as fp:
         content = fp.read()
 
+    # Find the old string
+    if old_string in content:
+        is_old_string_found = True
+
     # Replace
     content = content.replace(old_string, new_string)
 
@@ -64,7 +74,13 @@ def main():
         fp.write(content)
     # <--- operation
 
-    return 0
+    if fail_if_no_match:
+        if is_old_string_found:
+            return 0
+        else:
+            return 1
+    else:
+        return 0
 
 
 def printUsage():
@@ -73,7 +89,10 @@ def printUsage():
     print('{0}: A tool for replacing string on text file.'.format(application_name))
     print('')
     print('Usage:')
-    print('    {0}  print_info <path_file> <old_string> <new_string>'.format(application_name))
+    print('    {0} [options] <path_file> <old_string> <new_string>'.format(application_name))
+    print('    Available options:')
+    print('        --fail_if_no_match   Fail if old_string is not found')
+    print('')
     print('    {0} -h'.format(application_name))
     print('')
     print('Print help:')

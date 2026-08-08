@@ -73,23 +73,42 @@ Version: 1.1.0
             process_verifier_instance.assertExit(exit_code = 1, timeout = 10)
 
 
-    def test_failure_wrong_string(self):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            path = tmpdir + os.sep + 'test_data.txt'
+    def test_failure_no_match(self):
+        with self.subTest('withoutOption'):
+            with tempfile.TemporaryDirectory() as tmpdir:
+                path = tmpdir + os.sep + 'test_data.txt'
 
-            # Create test file
-            with open(path, mode = 'w') as fp:
-                fp.write(self._content)
+                # Create test file
+                with open(path, mode = 'w') as fp:
+                    fp.write(self._content)
 
-            # Replace
-            self._process = subprocess.Popen(
-                args=self._command + (path, '', 'Version: 1.1.0'),
-                stdout=subprocess.PIPE,
-                #stderr=subprocess.STDOUT,
-                universal_newlines=True)
-            process_verifier_instance = process_verifier.ProcessVerifier(self._process)
+                # Replace
+                self._process = subprocess.Popen(
+                    args=self._command + (path, 'Version: 0.9.0', 'Version: 1.1.0'),
+                    stdout=subprocess.PIPE,
+                    #stderr=subprocess.STDOUT,
+                    universal_newlines=True)
+                process_verifier_instance = process_verifier.ProcessVerifier(self._process)
 
-            process_verifier_instance.assertExit(exit_code = 1, timeout = 10)
+                process_verifier_instance.assertExit(exit_code = 0, timeout = 10)
+
+        with self.subTest('withtOption'):
+            with tempfile.TemporaryDirectory() as tmpdir:
+                path = tmpdir + os.sep + 'test_data.txt'
+
+                # Create test file
+                with open(path, mode = 'w') as fp:
+                    fp.write(self._content)
+
+                # Replace
+                self._process = subprocess.Popen(
+                    args=self._command + ('--fail_if_no_match', path, 'Version: 0.9.0', 'Version: 1.1.0'),
+                    stdout=subprocess.PIPE,
+                    #stderr=subprocess.STDOUT,
+                    universal_newlines=True)
+                process_verifier_instance = process_verifier.ProcessVerifier(self._process)
+
+                process_verifier_instance.assertExit(exit_code = 1, timeout = 10)
 
 
 if __name__ == '__main__':
