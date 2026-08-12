@@ -47,8 +47,8 @@ TARGET_FILES=(
   python/script/code/do_test.sh
 )
 
-OLD_STRING=1.1.0
-NEW_STRING=1.1.1
+OLD_STRING=1.1.1
+NEW_STRING=1.2.0
 
 echo ${SCRIPT_NAME}: Starts
 echo ${SCRIPT_NAME}: Replaces "${OLD_STRING}" to "${NEW_STRING}"
