@@ -68,7 +68,7 @@ name foo
 
 jobs:
   foo:
-    uses: Bacondish2023/hdk_dev_tool/.github/workflows/integration-gate.yml@v1.1.1
+    uses: Bacondish2023/hdk_dev_tool/.github/workflows/integration-gate.yml@v1.2.0
 ```
 
 #### Generic Project Operation Scripts

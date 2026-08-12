@@ -45,8 +45,8 @@ python\script\code\do_lint.sh ^
 python\script\code\do_test.bat ^
 python\script\code\do_test.sh
 
-set OLD_STRING=1.1.0
-set NEW_STRING=1.1.1
+set OLD_STRING=1.1.1
+set NEW_STRING=1.2.0
 
 echo !SCRIPT_NAME!: Starts
 echo !SCRIPT_NAME!: Replaces "%OLD_STRING%" to "%NEW_STRING%"
