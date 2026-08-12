@@ -1,0 +1,83 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+
+    "configurePresets": [
+        {
+            "name": "abstract",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/zzz_build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "real",
+            "inherits": "abstract",
+            "cacheVariables": {
+                "TARGET_TYPE": "Real",
+                "CMAKE_BUILD_TYPE": "Release",
+                "MCU": "atmega328p",
+                "CMAKE_TOOLCHAIN_FILE": "toolchain_avr8_real.cmake"
+            }
+        },
+        {
+            "name": "simulation",
+            "inherits": "abstract",
+            "cacheVariables": {
+                "TARGET_TYPE": "Simulation",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_TOOLCHAIN_FILE": "toolchain_avr8_simulation.cmake"
+            }
+        }
+    ],
+
+    "buildPresets": [
+        {
+            "name": "abstract",
+            "configurePreset": "abstract"
+        },
+        {
+            "name": "real",
+            "configurePreset": "real"
+        },
+        {
+            "name": "simulation",
+            "configurePreset": "simulation"
+        }
+    ],
+
+    "testPresets": [
+        {
+            "name": "abstract",
+            "configurePreset": "abstract"
+        },
+        {
+            "name": "real",
+            "configurePreset": "real"
+        },
+        {
+            "name": "simulation",
+            "configurePreset": "simulation"
+        }
+    ],
+
+    "packagePresets": [
+        {
+            "name": "abstract",
+            "configurePreset": "abstract"
+        },
+        {
+            "name": "real",
+            "configurePreset": "real"
+        },
+        {
+            "name": "simulation",
+            "configurePreset": "simulation"
+        }
+    ]
+}
