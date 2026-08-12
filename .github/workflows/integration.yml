@@ -16,3 +16,4 @@ jobs:
       platforms: '["ubuntu-latest", "windows-latest", "macos-15-intel"]'
       build-type-library: "Debug"
       is-required-papyrusrt: true
+      is-required-avr8: true

@@ -53,6 +53,7 @@ Parameters:
 |is-required-boost|Setup switch for Boost|No|boolean|true|
 |is-required-cppcheck|Setup switch for Cppcheck|No|boolean|true|
 |is-required-papyrusrt|Setup switch for Papyrus-RT|No|boolean|false|
+|is-required-avr8|Setup switch for AVR8 toolchain<br>(Supports Linux and Windows runners only)|No|boolean|false|
 
 secrets:
 
@@ -165,6 +166,12 @@ add_custom_target(lint
 The environment variable **PAPYRUSRT_ROOT** must specify the path to the Papyrus-RT directory.  
 The environment variable **UMLRTS_ROOT** must specify the path to the RTS library source directory.
 In Papyrus-RT v1.0.0, the library is located at `[your_installation_area]/Papyrus-RT/plugins/org.eclipse.papyrusrt.rts_1.0.0.201707181457/umlrts` .
+
+#### Optional Software for Testing
+
+|Item|Description|Manual Installation Required?|
+|:---|:---|:---|
+|AVR8 toolchain|Toolchain for AVR8 embedded software|**Yes**|
 
 ## Document
 

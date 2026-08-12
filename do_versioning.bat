@@ -16,6 +16,16 @@ cpp\script\code\do_lint.bat ^
 cpp\script\code\do_lint.sh ^
 cpp\script\code\do_test.bat ^
 cpp\script\code\do_test.sh ^
+embedded\avr8\script\code\do_build.bat ^
+embedded\avr8\script\code\do_build.sh ^
+embedded\avr8\script\code\do_clean.bat ^
+embedded\avr8\script\code\do_clean.sh ^
+embedded\avr8\script\code\do_lint.bat ^
+embedded\avr8\script\code\do_lint.sh ^
+embedded\avr8\script\code\do_test.bat ^
+embedded\avr8\script\code\do_test.sh ^
+embedded\avr8\script\code\toolchain_avr8_real.cmake ^
+embedded\avr8\script\code\toolchain_avr8_simulation.cmake ^
 papyrusrt\script\code\do_build.bat ^
 papyrusrt\script\code\do_build.sh ^
 papyrusrt\script\code\do_clean.bat ^

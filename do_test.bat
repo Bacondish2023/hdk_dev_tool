@@ -9,7 +9,7 @@ set RESULT_OF_COMMAND=0
 
 echo !SCRIPT_NAME!: Starts
 
-rem Test C++
+echo !SCRIPT_NAME!: C++
 python -B -m unittest discover --verbose --start-directory cpp/script/test --pattern "*.py"
 set RESULT_OF_COMMAND=!ERRORLEVEL!
 if !RESULT_OF_COMMAND! NEQ 0 (
@@ -17,7 +17,7 @@ if !RESULT_OF_COMMAND! NEQ 0 (
   exit /B 1
 )
 
-rem Test Papyrus-RT
+echo !SCRIPT_NAME!: Papyrus-RT
 python -B -m unittest discover --verbose --start-directory papyrusrt/script/test --pattern "*.py"
 set RESULT_OF_COMMAND=!ERRORLEVEL!
 if !RESULT_OF_COMMAND! NEQ 0 (
@@ -25,7 +25,7 @@ if !RESULT_OF_COMMAND! NEQ 0 (
   exit /B 1
 )
 
-rem Test Python
+echo !SCRIPT_NAME!: Python
 python -B -m unittest discover --verbose --start-directory python/script/test --pattern "test_[0-9]*.py"
 set RESULT_OF_COMMAND=!ERRORLEVEL!
 if !RESULT_OF_COMMAND! NEQ 0 (
@@ -33,7 +33,15 @@ if !RESULT_OF_COMMAND! NEQ 0 (
   exit /B 1
 )
 
-rem Test Tool
+echo !SCRIPT_NAME!: AVR8
+python -B -m unittest discover --verbose --start-directory embedded/avr8/script/test --pattern "*.py"
+set RESULT_OF_COMMAND=!ERRORLEVEL!
+if !RESULT_OF_COMMAND! NEQ 0 (
+  echo !SCRIPT_NAME!: Test failed. Return code is: !RESULT_OF_COMMAND!
+  exit /B 1
+)
+
+echo !SCRIPT_NAME!: Tool
 python -B -m unittest discover --verbose --start-directory tool/test --pattern "test_*.py"
 set RESULT_OF_COMMAND=!ERRORLEVEL!
 if !RESULT_OF_COMMAND! NEQ 0 (

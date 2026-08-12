@@ -40,6 +40,11 @@ on:
         required: false
         type: boolean
         default: false
+      is-required-avr8:
+        description: "Setup switch for AVR8 toolchain"
+        required: false
+        type: boolean
+        default: false
     secrets:
       token:
         description: "Access token that is used for checkout repositories. If target repository contains submodule this workflow requires permission."
@@ -144,6 +149,35 @@ jobs:
         uses: Bacondish2023/setup-papyrusrt@v1
         with:
           papyrusrt-version: 1.0.0
+
+      # AVR8
+      - name: Setup AVR8 toolchain
+        if: (inputs.is-required-avr8) && (runner.os == 'Linux')
+        run:    |
+                sudo apt-get update
+                sudo apt-get install -y gcc-avr binutils-avr avr-libc
+                sudo apt-get install -y avrdude
+                avr-gcc --version
+                avrdude -?
+
+      - name: Setup AVR8 toolchain
+        if: (inputs.is-required-avr8) && (runner.os == 'macOs')
+      # Disabled because this step takes too long and increases workflow runtime
+      #  run:    |
+      #          brew tap osx-cross/avr
+      #          brew trust osx-cross/avr
+      #          brew install avr-gcc
+      #          brew install avrdude
+      #          avr-gcc --version
+      #          avrdude -?
+        run: echo "::warning::AVR8 toolchain setup is not supported on macOS"
+
+      - name: Setup AVR8 toolchain
+        if: (inputs.is-required-avr8) && (runner.os == 'Windows')
+        run:    |
+                winget install --exact --id ZakKemble.avr-gcc --silent --accept-source-agreements --accept-package-agreements
+                avr-gcc --version
+                avrdude -?
 
       ##################################################
       # Build
