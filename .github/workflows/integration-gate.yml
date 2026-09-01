@@ -174,8 +174,15 @@ jobs:
 
       - name: Setup AVR8 toolchain
         if: (inputs.is-required-avr8) && (runner.os == 'Windows')
+        # Install, search avr-gcc, and set path
         run:    |
                 winget install --exact --id ZakKemble.avr-gcc --silent --accept-source-agreements --accept-package-agreements
+                $pathAvrGcc = Get-ChildItem -Path "$env:LOCALAPPDATA\Microsoft\WinGet\Packages" -Filter "avr-gcc.exe" -Recurse -File | Select-Object -ExpandProperty FullName
+                Split-Path "$pathAvrGcc" -Parent | Out-File -FilePath ${env:GITHUB_PATH} -Encoding utf8 -Append
+                if ($null -eq $pathAvrGcc) {
+                  echo "::error::AVR8 toolchain was not found after installation"
+                  exit 1
+                }
                 avr-gcc --version
                 avrdude -?
 
