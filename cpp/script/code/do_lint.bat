@@ -2,7 +2,7 @@
 rem Copyright (c) 2026 Hidekazu TAKAHASHI
 rem SPDX-License-Identifier: MIT
 rem Source: https://github.com/Bacondish2023/hdk_dev_tool
-rem Version: 1.2.0
+rem Version: 1.2.1
 rem
 rem This script runs lint
 rem
