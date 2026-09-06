@@ -28,7 +28,7 @@ set(CMAKE_C_COMPILER ${AVR_CC})
 set(CMAKE_CXX_COMPILER ${AVR_CXX})
 
 # Compiler option
-set(CMAKE_CXX_FLAGS "-fno-threadsafe-statics -funsigned-char -funsigned-bitfields -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=${MCU}")
+set(CMAKE_CXX_FLAGS "-fno-threadsafe-statics -funsigned-char -funsigned-bitfields -ffunction-sections -fdata-sections -fshort-enums -Wall -mmcu=${MCU}")
 
 # Linker option
 set(CMAKE_EXE_LINKER_FLAGS "-Wl,-lm -Wl,--gc-sections -mmcu=${MCU}")
