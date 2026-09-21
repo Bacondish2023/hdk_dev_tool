@@ -1,8 +1,8 @@
 # hdk_dev_tool
 
-A project for developing software development tools.
+A project for creating software development tools.
 
-This project is intended for my projects.  
+This project is intended for my own projects.
 The figure below illustrates the concept of **hdk_dev_tool**.
 
 ![Concept](document/development/20_design/image/concept.png)
@@ -61,19 +61,36 @@ secrets:
 |:---|:---|:---|
 |token|Access token that is used for checkout repositories.<br>If target repository contains submodule this workflow requires permission.|No|
 
-To invoke this workflow from your **foo** project, you can define a workflow as follows:
+To invoke this workflow from your `foo` project, you can define a workflow as follows:
 
 ```
-name foo
+name: foo
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize # Pushed to PR branch. The author would push a fix commit to the branch
+      - reopened
+  workflow_dispatch:
 
 jobs:
   foo:
     uses: Bacondish2023/hdk_dev_tool/.github/workflows/integration-gate.yml@v1.2.2
 ```
 
+The example above uses the triggers defined in the `on` section
+to invoke the workflow when reviewers want to check test results related to a pull request.
+In addition, `workflow_dispatch` allows authors to run the workflow
+and check its result before creating a pull request.
+
 #### Generic Project Operation Scripts
 
-The Generic Project Operation Scripts return exit codes based on execution results:
+The Generic Project Operation Scripts are a set of scripts
+designed to facilitate common project operations
+such as building, cleaning, linting, and testing.
+
+The scripts return exit codes based on execution results:
 
 * `0`: Success
 * `1`: Failure
@@ -81,9 +98,34 @@ The Generic Project Operation Scripts return exit codes based on execution resul
 The reusable workflow performs error handling based on these return codes,
 allowing CI workflows to fail fast and report errors accurately.
 
-You can copy the Generic Project Operation Scripts into your project
-and register them in your repository.
-Shell scripts should be registered in the repository with executable permissions.
+The scripts are implemented as batch files and shell scripts
+to support both Windows and Unix-like environments.
+You can use `.bat` scripts on Windows and `.sh` scripts on Unix-like environments.
+
+##### Supported Languages
+
+The Generic Project Operation Scripts are organized by language as shown below.
+
+|Language|Details|Script Path|
+|:---|:---|:---|
+|C/C++|[README](cpp/README.md)|hdk_dev_tool/cpp/script/code/|
+|Papyrus-RT|[README](papyrusrt/README.md)|hdk_dev_tool/papyrusrt/script/code/|
+|Python|[README](python/README.md)|hdk_dev_tool/python/script/code/|
+|Embedded AVR8|[README](embedded/avr8/README.md)|hdk_dev_tool/embedded/avr8/script/code/|
+
+Copy the files from the directory specified in the "Script Path" column above
+and integrate them into your project as needed.
+
+##### Integration with User Project
+
+This section describes how to integrate the Generic Project Operation Scripts
+into your user project.
+
+For example:
+
+1. Copy the Generic Project Operation Scripts into your project repository.
+    * The top-level directory of your project repository is recommended for placing the scripts.
+2. Register the shell scripts with executable permissions in the repository.
 
 Example of registering `do_build.sh` in a Git repository:
 
@@ -93,56 +135,12 @@ git update-index --add --chmod=+x do_build.sh
 git commit
 ```
 
-The Generic Project Operation Scripts are organized by language as shown below.
-
-###### For C/C++ Projects
-
-* hdk_dev_tool/cpp/script/code/
-    * do_build.bat
-    * do_build.sh
-    * do_clean.bat
-    * do_clean.sh
-    * do_lint.bat
-    * do_lint.sh
-    * do_test.bat
-    * do_test.sh
-
-In C/C++ projects, the `do_lint` scripts require a `lint` target to be defined.
-This target is used by the reusable workflow to perform static analysis
-and determine the success or failure of the lint step.
-
-If you use the Generic Project Operation Scripts **as-is**, without customization,
-it is recommended to define the `lint` target in the top-level
-`CMakeLists.txt` file of your project.
-If you customize the scripts, this requirement does not necessarily apply.
-
-An example is shown below:
-
-```txt
-find_program(CPPCHECK cppcheck REQUIRED)
-add_custom_target(lint
-    COMMAND ${CPPCHECK}
-        --project=${CMAKE_BINARY_DIR}/compile_commands.json
-        --std=c++11
-        --enable=warning,performance,portability
-        --suppress=missingIncludeSystem
-        --inconclusive
-        --error-exitcode=1
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
-```
-
-###### For Papyrus-RT Projects
-
-* hdk_dev_tool/papyrusrt/script/code/
-
-###### For Python Projects
-
-* hdk_dev_tool/python/script/code/
+3. Configure your project to work with the Generic Project Operation Scripts,
+   or modify the scripts as needed to fit your project structure.
 
 ## Prerequisites
 
-#### Supported platform
+#### Supported platforms
 
 * Linux
 * Windows
@@ -175,8 +173,9 @@ In Papyrus-RT v1.0.0, the library is located at `[your_installation_area]/Papyru
 
 ## Document
 
-* [Requirements](document/development/10_requirements/requirements.md)
-* [Design](document/development/20_design/design.md)
+* Development
+    * [Requirements](document/development/10_requirements/requirements.md)
+    * [Design](document/development/20_design/design.md)
 * [Papyrus-RT: Quick Reference](document/papyrusrt/papyrusrt_v1.0_quick_reference.md)
 
 ## License

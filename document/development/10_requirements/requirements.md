@@ -85,10 +85,14 @@ This requirement ensures that users are made aware of issues.
 #### [FR_2] Generic Project Operation Scripts
 
 Description:  
-Users can copy scripts provided by this project and integrate them into their own projects.
+A set of scripts "Generic Project Operation Scripts" provides
+common project operations such as building, linting, testing, and cleaning.
+And users can copy scripts provided by this project and integrate them
+into their own projects.
 
 Rationale:  
-To improve the maintainability of project operation scripts.
+Provide a standardized way of operations
+to reduce duplication across projects and improve maintainability.
 
 #### [FR_2.1] Error Handling
 
