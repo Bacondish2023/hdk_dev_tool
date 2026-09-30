@@ -158,6 +158,7 @@ git commit
 |Cppcheck|A static source code analysis tool|**Yes**|
 |Python 3|-|**Yes**|
 |integration_test_plugin|A Python3 package for integration test|No (Installation is performed on build script)|
+|unittest-parallel|A Python3 package for parallel test execution|No (Installation is performed on build script)|
 |Papyrus-RT|A UMR-RT based software development tool<br>Environment variables **PAPYRUSRT_ROOT** and **UMLRTS_ROOT** are also required|**Yes**|
 |model_compiler_for_papyrusrt|A build tool for projects using Papyrus-RT|No (Installation is performed on build script)|
 
