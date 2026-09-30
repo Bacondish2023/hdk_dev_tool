@@ -1,2 +1,3 @@
 integration_test_plugin
 model_compiler_for_papyrusrt
+unittest-parallel

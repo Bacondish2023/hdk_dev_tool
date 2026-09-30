@@ -10,7 +10,7 @@ RESULT_OF_COMMAND=0
 echo ${SCRIPT_NAME}: Starts
 
 echo ${SCRIPT_NAME}: C++
-python -B -m unittest discover --verbose --start-directory cpp/script/test --pattern "*.py"
+unittest-parallel --verbose --start-directory cpp/script/test --pattern "*.py"
 RESULT_OF_COMMAND=$?
 if [ ${RESULT_OF_COMMAND} != 0 ]; then
   echo ${SCRIPT_NAME}: Test failed. Return code is: ${RESULT_OF_COMMAND}
@@ -18,7 +18,7 @@ if [ ${RESULT_OF_COMMAND} != 0 ]; then
 fi
 
 echo ${SCRIPT_NAME}: Papyrus-RT
-python -B -m unittest discover --verbose --start-directory papyrusrt/script/test --pattern "*.py"
+unittest-parallel --verbose --start-directory papyrusrt/script/test --pattern "*.py"
 RESULT_OF_COMMAND=$?
 if [ ${RESULT_OF_COMMAND} != 0 ]; then
   echo ${SCRIPT_NAME}: Test failed. Return code is: ${RESULT_OF_COMMAND}
@@ -26,7 +26,7 @@ if [ ${RESULT_OF_COMMAND} != 0 ]; then
 fi
 
 echo ${SCRIPT_NAME}: Python
-python -B -m unittest discover --verbose --start-directory python/script/test --pattern "test_[0-9]*.py"
+unittest-parallel --verbose --start-directory python/script/test --pattern "test_[0-9]*.py"
 RESULT_OF_COMMAND=$?
 if [ ${RESULT_OF_COMMAND} != 0 ]; then
   echo ${SCRIPT_NAME}: Test failed. Return code is: ${RESULT_OF_COMMAND}
@@ -34,7 +34,7 @@ if [ ${RESULT_OF_COMMAND} != 0 ]; then
 fi
 
 echo ${SCRIPT_NAME}: AVR8
-python -B -m unittest discover --verbose --start-directory embedded/avr8/script/test --pattern "*.py"
+unittest-parallel --verbose --start-directory embedded/avr8/script/test --pattern "*.py"
 RESULT_OF_COMMAND=$?
 if [ ${RESULT_OF_COMMAND} != 0 ]; then
   echo ${SCRIPT_NAME}: Test failed. Return code is: ${RESULT_OF_COMMAND}
@@ -42,7 +42,7 @@ if [ ${RESULT_OF_COMMAND} != 0 ]; then
 fi
 
 echo ${SCRIPT_NAME}: Tool
-python -B -m unittest discover --verbose --start-directory tool/test --pattern "test_*.py"
+unittest-parallel --verbose --start-directory tool/test --pattern "test_*.py"
 RESULT_OF_COMMAND=$?
 if [ ${RESULT_OF_COMMAND} != 0 ]; then
   echo ${SCRIPT_NAME}: Test failed. Return code is: ${RESULT_OF_COMMAND}
