@@ -76,7 +76,7 @@ on:
 
 jobs:
   foo:
-    uses: Bacondish2023/hdk_dev_tool/.github/workflows/integration-gate.yml@v1.2.2
+    uses: Bacondish2023/hdk_dev_tool/.github/workflows/integration-gate.yml@v1.2.3
 ```
 
 The example above uses the triggers defined in the `on` section
