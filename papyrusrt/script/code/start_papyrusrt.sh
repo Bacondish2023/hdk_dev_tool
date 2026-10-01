@@ -2,7 +2,7 @@
 # Copyright (c) 2026 Hidekazu TAKAHASHI
 # SPDX-License-Identifier: MIT
 # Source: https://github.com/Bacondish2023/hdk_dev_tool
-# Version: 1.2.2
+# Version: 1.2.3
 #
 # This script creates workspace and launches Papyrus-RT
 #
