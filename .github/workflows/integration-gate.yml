@@ -127,7 +127,6 @@ jobs:
       - name: Setup Cppcheck
         if: (inputs.is-required-cppcheck) && (runner.os == 'macOs')
         run:    |
-                brew update
                 brew install cppcheck
                 cppcheck --version
 
